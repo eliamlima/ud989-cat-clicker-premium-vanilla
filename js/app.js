@@ -162,20 +162,33 @@ var adminView = {
   init: function() {
     this.adminElem = document.getElementById('admin-field');
     this.adminBtn = document.getElementById('admin-btn');
+    this.adminCancelBtn = document.getElementById('cancel-btn');
+    this.inputName = document.getElementById('admin-name');
+    this.inputURL = document.getElementById('admin-url');
+    this.inputCount = document.getElementById('admin-count');
     this.adminElem.style.display = "none";
 
     this.adminBtn.addEventListener('click', function(){
       octopus.toggleAdmin();
       adminView.render();
     });
+
+    this.adminCancelBtn.addEventListener('click', function(){
+      adminView.render();
+      // this.inputURL = "";
+      // this.inputCount = "";
+    });
   },
 
   render: function() {
+    this.inputName.value = "";
+    this.inputURL.value = "";
+    this.inputCount.value = "";
     var adminVisible = octopus.getAdminStatus();
     if (adminVisible) {
-      this.adminElem.style.display = "none";
-    } else {
       this.adminElem.style.display = "block";
+    } else {
+      this.adminElem.style.display = "none";
     }
   }
 };
