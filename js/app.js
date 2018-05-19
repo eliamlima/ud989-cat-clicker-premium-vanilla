@@ -34,7 +34,8 @@ var model = {
             imgSrc : 'img/9648464288_2516b35537_z.jpg',
             imgAttribution : 'https://www.flickr.com/photos/onesharp/9648464288'
         }
-    ]
+    ],
+    adminStatus: false
 };
 
 
@@ -49,6 +50,7 @@ var octopus = {
         // tell our views to initialize
         catListView.init();
         catView.init();
+        adminView.init();
     },
 
     getCurrentCat: function() {
@@ -68,6 +70,18 @@ var octopus = {
     incrementCounter: function() {
         model.currentCat.clickCount++;
         catView.render();
+    },
+
+    toggleAdmin: function() {
+      if(model.adminStatus){
+        model.adminStatus = false;
+      } else {
+        model.adminStatus = true;
+      }
+    },
+
+    getAdminStatus: function() {
+      return model.adminStatus;
     }
 };
 
@@ -142,6 +156,28 @@ var catListView = {
             this.catListElem.appendChild(elem);
         }
     }
+};
+
+var adminView = {
+  init: function() {
+    this.adminElem = document.getElementById('admin-field');
+    this.adminBtn = document.getElementById('admin-btn');
+    this.adminElem.style.display = "none";
+
+    this.adminBtn.addEventListener('click', function(){
+      octopus.toggleAdmin();
+      adminView.render();
+    });
+  },
+
+  render: function() {
+    var adminVisible = octopus.getAdminStatus();
+    if (adminVisible) {
+      this.adminElem.style.display = "none";
+    } else {
+      this.adminElem.style.display = "block";
+    }
+  }
 };
 
 // make it go!
